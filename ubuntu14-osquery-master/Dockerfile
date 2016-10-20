@@ -19,7 +19,10 @@ RUN git checkout $OSQUERY_GIT_REV
 RUN ./tools/provision.sh
 run make deps
 RUN make 
+RUN make install
 WORKDIR /osquery/build/linux/osquery
 
+RUN mkdir -p /var/osquery && mkdir -p /var/log/osquery
+
 COPY osquery.example.conf /etc/osquery/osquery.conf
-CMD ["./osqueryd", "--config_path=/etc/osquery/osquery.conf", "--verbose"]
+CMD ["osqueryd", "--config_path=/etc/osquery/osquery.conf", "--verbose"]
